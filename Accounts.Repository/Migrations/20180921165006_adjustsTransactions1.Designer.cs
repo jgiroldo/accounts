@@ -4,14 +4,16 @@ using Accounts.Repository.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Accounts.Repository.Migrations
 {
     [DbContext(typeof(AccountsContext))]
-    partial class AccountsContextModelSnapshot : ModelSnapshot
+    [Migration("20180921165006_adjustsTransactions1")]
+    partial class adjustsTransactions1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,15 +96,10 @@ namespace Accounts.Repository.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ID")
-                        .HasDefaultValue(new Guid("3ec55caf-4684-48ca-a976-59a80a0f92f8"));
+                        .HasDefaultValue(new Guid("666d53a9-c81e-4605-905b-e5ea91ceefe7"));
 
                     b.Property<int>("DestinyAccountId")
                         .HasColumnName("DESTINY_ACCOUNT_ID");
-
-                    b.Property<bool>("IsReversed")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("IS_REVERSED")
-                        .HasDefaultValue(false);
 
                     b.Property<DateTime>("OperationDate")
                         .ValueGeneratedOnAdd()

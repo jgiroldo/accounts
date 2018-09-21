@@ -15,6 +15,7 @@ namespace Accounts.Repository.Context
         {
             new AccountConfiguration(modelBuilder);
             new PersonConfiguration(modelBuilder);
+            new TransactionConfiguration(modelBuilder);
         }
     }
 }

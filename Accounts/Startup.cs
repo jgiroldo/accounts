@@ -7,7 +7,9 @@ using Accounts.Repository.Context;
 using Accounts.Repository.Repositories;
 using Accounts.Repository.Repositories.Impl;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,9 +34,22 @@ namespace Accounts
             services.AddMvc();
             services.AddDbContext<AccountsContext>(ConfigureDatabase);
 
+
+            //CORS
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowAnyMethod();
+            corsBuilder.AllowAnyOrigin();
+            corsBuilder.AllowCredentials();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
+            });
+
             //REPOSITORIOS
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
 
             //SERVICOS
             services.AddScoped<IAccountService, AccountService>();
@@ -44,7 +59,7 @@ namespace Accounts
 
         void ConfigureDatabase(IServiceProvider provider, DbContextOptionsBuilder options)
         {
-            var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION");//Configuration.GetConnectionString("DefaultConnection");
+            var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION");
             options.UseSqlServer(connectionString);
         }
 
@@ -55,6 +70,7 @@ namespace Accounts
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("SiteCorsPolicy");
 
             Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
             factory.AddSerilog(Log.Logger);

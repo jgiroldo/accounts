@@ -6,6 +6,7 @@ using Accounts.Business.Exceptions;
 using Accounts.Business.Models;
 using Accounts.Business.Services;
 using Accounts.Domain.Entities;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Accounts.Controllers
@@ -74,6 +75,26 @@ namespace Accounts.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        [Route("")]
+        [Produces(typeof(Account))]
+        public IActionResult Put(int id, [FromBody] Account account)
+        {
+            try
+            {
+                var result = service.Update(id, account);
+                return Ok(result);
+            }
+            catch (BusinessException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+            catch (Exception)
+            {
+                throw new Exception("Falha na Requisição");
+            }
+        }
+
         [HttpPost]
         [Route("transfer")]
         [Produces(typeof(bool))]
@@ -94,10 +115,53 @@ namespace Accounts.Controllers
             }
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPost]
+        [Route("transfer/chargeback")]
+        [Produces(typeof(bool))]
+        public IActionResult Post([FromBody] Transaction transaction)
         {
+            try
+            {
+                var result = service.Chargeback(transaction);
+                return Ok(result);
+            }
+            catch (BusinessException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+            catch (Exception)
+            {
+                throw new Exception("Falha na Requisição");
+            }
+        }
+
+
+        [HttpGet]
+        [Route("account-status")]
+        public IEnumerable<AccountStatus> GetAccountStatus()
+        {
+            try
+            {
+                return service.GetAccountStatus();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Falha na Requisição");
+            }
+        }
+
+        [HttpGet]
+        [Route("transaction-types")]
+        public IEnumerable<TransactionType> GetTransactionTypes()
+        {
+            try
+            {
+                return service.GetTransactionTypes();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Falha na Requisição");
+            }
         }
     }
 }
