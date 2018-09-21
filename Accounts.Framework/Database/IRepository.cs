@@ -12,5 +12,9 @@ namespace Accounts.Framework.Database
         IList<T> Get(Expression<Func<T, bool>> condition);
         T Get(params object[] key);
         T Save(T entity);
+        void BeginTransaction();
+        void CommitTransaction();
+        void RollbackTransaction();
+
     }
 }

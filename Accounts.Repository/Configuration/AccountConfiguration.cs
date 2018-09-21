@@ -48,6 +48,11 @@ namespace Accounts.Repository.Configuration
                   .HasColumnName("PERSON_ID")
                   .IsRequired();
 
+            entity.Property(e => e.Balance)
+                 .HasColumnName("BALANCE")
+                 .IsRequired()
+                 .HasDefaultValue(0);
+
             entity.HasOne(e => e.Person)
                   .WithMany()
                   .HasConstraintName("FK_ACCOUNT_PERSON")

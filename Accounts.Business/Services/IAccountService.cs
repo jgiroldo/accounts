@@ -10,5 +10,6 @@ namespace Accounts.Business.Services
         IEnumerable<Account> GetAll(AccountRequest request);
         IEnumerable<Account> Get(int id);
         Account Create(Account request);
+        bool Transfer(TransferViewModel transfer);
     }
 }

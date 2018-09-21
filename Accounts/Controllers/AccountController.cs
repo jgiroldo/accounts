@@ -66,7 +66,27 @@ namespace Accounts.Controllers
             }
             catch(BusinessException ex)
             {
-                return BadRequest(new { Id = Guid.NewGuid(), Message = ex.Message });
+                return BadRequest(new { Message = ex.Message });
+            }
+            catch (Exception)
+            {
+                throw new Exception("Falha na Requisição");
+            }
+        }
+
+        [HttpPost]
+        [Route("transfer")]
+        [Produces(typeof(bool))]
+        public IActionResult Post([FromBody] TransferViewModel transfer)
+        {
+            try
+            {
+                var result = service.Transfer(transfer);
+                return Ok(result);
+            }
+            catch (BusinessException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
             }
             catch (Exception)
             {

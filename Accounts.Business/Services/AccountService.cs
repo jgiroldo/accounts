@@ -5,16 +5,19 @@ using Accounts.Business.Exceptions;
 using Accounts.Business.Models;
 using Accounts.Domain.Entities;
 using Accounts.Repository.Repositories;
+using Microsoft.Extensions.Logging;
 
 namespace Accounts.Business.Services
 {
     public class AccountService : IAccountService
     {
         IAccountRepository repository;
+        ILogger<AccountService> logger;
 
-        public AccountService(IAccountRepository repository)
+        public AccountService(IAccountRepository repository, ILogger<AccountService> logger)
         {
             this.repository = repository;
+            this.logger = logger;
         }
 
         public IEnumerable<Account> GetAll(AccountRequest request)
@@ -36,6 +39,50 @@ namespace Accounts.Business.Services
             return account;
         }
 
+        public bool Transfer(TransferViewModel transfer)
+        {
+            try
+            {
+                logger.LogInformation("Iniciando transferencia");
+                repository.BeginTransaction();
+
+                var origin = repository.Get(new object[] { transfer.SourceId });
+                if (origin == null)
+                    throw new BusinessException($"Conta {transfer.SourceId} não encontrada");
+
+
+                var destiny = repository.Get(new object[] { transfer.DestinyId });
+                if (destiny == null)
+                    throw new BusinessException($"Conta {transfer.DestinyId} não encontrada");
+
+                if (destiny.MasterAccount == null)
+                    throw new BusinessException($"Conta {transfer.DestinyId} é conta Matriz, não pode receber transferências!");
+
+
+                if (origin.Balance <= transfer.Value)
+                    throw new BusinessException($"Saldo insuficiente");
+
+
+                origin.Balance -= transfer.Value;
+                destiny.Balance += transfer.Value;
+
+
+                repository.Save(origin);
+                repository.Save(destiny);
+
+                repository.CommitTransaction();
+                return true;
+            }
+            catch
+            {
+                repository.RollbackTransaction();
+                throw;
+            }
+
+        }
+
+
+
         bool Filter(Account e, AccountRequest request)
         {
             if (request == null)
@@ -46,5 +93,6 @@ namespace Accounts.Business.Services
 
             return true;
         }
+
     }
 }

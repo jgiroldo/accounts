@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,5 +67,10 @@ namespace Accounts.Framework.Database
             Context.SaveChanges();
             return entity;
         }
+
+
+        public void BeginTransaction() => Context.BeginTransaction();
+        public void CommitTransaction() => Context.CommitTransaction();
+        public void RollbackTransaction() => Context.RollbackTransaction();
     }
 }

@@ -32,7 +32,10 @@ namespace Accounts.Domain.Entities
 
         [DataMember(Name = "name")]
         public string Name { get; set; }
-        
+
+        [DataMember(Name = "balance")]
+        public float Balance { get; set; }
+
         public override object[] GetKey() => new object[] { Id };
     }
 }
