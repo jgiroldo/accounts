@@ -17,7 +17,8 @@ namespace Accounts.Repository.Repositories.Impl
 
         public IEnumerable<Transaction> GetTransactions()
         {
-            return Context.Set<Transaction>().AsNoTracking()
+            return Context.Set<Transaction>()
+                .AsNoTracking()
                 .Include(e => e.SourceAccount)
                 .Include(e => e.DestinyAccount)
                 .ToList();

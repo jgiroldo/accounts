@@ -35,8 +35,8 @@ namespace Accounts.Repository.Configuration
                   .HasColumnName("SOURCE_ACCOUNT_ID");
 
             entity.Property(e => e.DestinyAccountId)
-                  .HasColumnName("DESTINY_ACCOUNT_ID")
-                  .IsRequired();
+                  .HasColumnName("DESTINY_ACCOUNT_ID");
+
 
             entity.Property(e => e.Value)
                   .HasColumnName("VALUE")

@@ -94,9 +94,9 @@ namespace Accounts.Repository.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ID")
-                        .HasDefaultValue(new Guid("c4b8cf66-a4bc-4b66-9441-78f1ecf0cb8e"));
+                        .HasDefaultValue(new Guid("b0b76420-fd44-4610-87f1-2c6661e810b4"));
 
-                    b.Property<int>("DestinyAccountId")
+                    b.Property<int?>("DestinyAccountId")
                         .HasColumnName("DESTINY_ACCOUNT_ID");
 
                     b.Property<bool>("IsReversed")

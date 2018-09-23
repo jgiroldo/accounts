@@ -167,6 +167,21 @@ namespace Accounts.Business.Services
                 if (transactionToChargeback.IsReversed)
                     throw new BusinessException($"Transação {transactionToChargeback.Id} já realizada anteriormente");
 
+                if (transactionToChargeback.OperationType == (int)TransactionTypeEnum.INJECTION)
+                {
+                    newSource.Balance -= transactionToChargeback.Value;
+                    newTransaction.OperationType = (int)TransactionTypeEnum.CHARGEBACK;
+                    newTransaction.Value= transactionToChargeback.Value;
+                    newTransaction.SourceAccountId= transactionToChargeback.DestinyAccountId;
+                    transactionToChargeback.IsReversed = true;
+                    accountRepository.Save(newSource);
+                    transactionRepository.Save(newTransaction);
+                    transactionRepository.Save(transactionToChargeback);
+
+                    accountRepository.CommitTransaction();
+                    return true;
+
+                }
                 newDestiny.Balance += transactionToChargeback.Value;
                 newSource.Balance -= transactionToChargeback.Value;
 

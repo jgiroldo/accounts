@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Accounts.Repository.Migrations
 {
     [DbContext(typeof(AccountsContext))]
-    [Migration("20180921144808_includeTransactions")]
-    partial class includeTransactions
+    [Migration("20180923214904_baseDados")]
+    partial class baseDados
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -96,10 +96,15 @@ namespace Accounts.Repository.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ID")
-                        .HasDefaultValue(new Guid("55c09675-6280-4214-a852-485b3d7a0e12"));
+                        .HasDefaultValue(new Guid("b0b76420-fd44-4610-87f1-2c6661e810b4"));
 
-                    b.Property<int>("DestinyAccountId")
+                    b.Property<int?>("DestinyAccountId")
                         .HasColumnName("DESTINY_ACCOUNT_ID");
+
+                    b.Property<bool>("IsReversed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("IS_REVERSED")
+                        .HasDefaultValue(false);
 
                     b.Property<DateTime>("OperationDate")
                         .ValueGeneratedOnAdd()
@@ -109,7 +114,7 @@ namespace Accounts.Repository.Migrations
                     b.Property<int>("OperationType")
                         .HasColumnName("OPERATION_TYPE");
 
-                    b.Property<int>("SourceAccountId")
+                    b.Property<int?>("SourceAccountId")
                         .HasColumnName("SOURCE_ACCOUNT_ID");
 
                     b.Property<float>("Value")

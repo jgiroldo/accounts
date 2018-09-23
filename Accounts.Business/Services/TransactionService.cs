@@ -36,17 +36,17 @@ namespace Accounts.Business.Services
             return transactionRepository.GetTransactions(e => e.Id == id);
         }
 
-        
+
         bool Filter(Transaction e, TransactionRequest request)
         {
             if (request == null)
                 return true;
 
-            if (!string.IsNullOrWhiteSpace(request.OperationType.ToString()) && e.OperationType == request.OperationType != true)
+            if (request.OperationType != 0 && e.OperationType == request.OperationType != true)
                 return false;
 
             return true;
         }
-        
+
     }
 }

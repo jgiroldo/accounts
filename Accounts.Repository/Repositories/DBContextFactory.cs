@@ -12,7 +12,7 @@ namespace Accounts.Repository.Repositories
         public AccountsContext CreateDbContext(string[] args)
         {
             var options = new DbContextOptionsBuilder<AccountsContext>()
-                            .UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\PROJETOS\accountsDB.mdf;Integrated Security=True;Connect Timeout=30")
+                            .UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\PROJETOS\accounts\accountsDB.mdf;Integrated Security=True;Connect Timeout=30")
                             .Options;
 
             return new AccountsContext(options);

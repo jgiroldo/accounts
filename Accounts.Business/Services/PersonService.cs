@@ -72,13 +72,13 @@ namespace Accounts.Business.Services
             if (!string.IsNullOrWhiteSpace(request.CpfCnpj) && e.CpfCnpj?.Contains(request.CpfCnpj) != true)
                 return false;
 
-            if (!string.IsNullOrWhiteSpace(request.SocialName) && e.SocialName?.Contains(request.SocialName) != true)
+            if (!string.IsNullOrWhiteSpace(request.SocialName) && e.SocialName?.ToLower().Contains(request.SocialName.ToLower()) != true)
                 return false;
 
-            if (!string.IsNullOrWhiteSpace(request.Name) && e.Name?.Contains(request.Name) != true)
+            if (!string.IsNullOrWhiteSpace(request.Name) && e.Name?.ToLower().Contains(request.Name.ToLower()) != true)
                 return false;
 
-            if (!string.IsNullOrWhiteSpace(request.ConpanyName) && e.ConpanyName?.Contains(request.ConpanyName) != true)
+            if (!string.IsNullOrWhiteSpace(request.ConpanyName) && e.ConpanyName?.ToLower().Contains(request.ConpanyName.ToLower()) != true)
                 return false;
 
             return true;

@@ -26,7 +26,7 @@ namespace Accounts.Domain.Entities
         public virtual Account SourceAccount { get; set; }
 
         [DataMember(Name = "destiny_account_id")]
-        public int DestinyAccountId { get; set; }
+        public int? DestinyAccountId { get; set; }
 
         [DataMember(Name = "destiny_account")]
         public virtual Account DestinyAccount { get; set; }
