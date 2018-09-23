@@ -41,26 +41,42 @@ namespace Accounts.Business.Services
         public Account Create(Account account)
         {
             if (account == null)
-                throw new BusinessException("Requisição inválida");
-
+                throw new BusinessException("Invalid request");
+            account.Status = (int)AccountStatusEnum.ACTIVE;
+            if (account.ParentAccount != null)
+                account.MasterAccount = VerifyMasterAccount((int)account.ParentAccount);
             accountRepository.Save(account);
             return account;
+        }
+
+        private int VerifyMasterAccount(int parentID)
+        {
+            var parent = accountRepository.Get(parentID);
+            if (parent.MasterAccount != null)
+                return (int)parent.MasterAccount;
+            return parent.Id;
         }
 
         public Account Update(int id, Account account)
         {
             if (account == null)
-                throw new BusinessException("Requisição inválida");
-
-            var updateAccount = accountRepository.Get(id);
+                throw new BusinessException("Invalid request");
+            accountRepository.BeginTransaction();
+            var updateAccount = accountRepository.Get(new object[] { id });
             if (updateAccount.Id == account.Id)
             {
-                updateAccount = account;
-                accountRepository.Save(updateAccount);
+                if (updateAccount.Balance != account.Balance)
+                    throw new BusinessException("Change balance not alowed");
+
+                if (updateAccount.ParentAccount != null)
+                    account.MasterAccount = VerifyMasterAccount((int)updateAccount.ParentAccount);
+                account.Person = null;
+                accountRepository.Save(account);
+                accountRepository.CommitTransaction();
             }
             else
             {
-                throw new BusinessException("Requisição inválida");
+                throw new BusinessException("Invalid request");
             }
 
             return account;
@@ -181,7 +197,7 @@ namespace Accounts.Business.Services
             if (request == null)
                 return true;
 
-            if (!string.IsNullOrWhiteSpace(request.Name) && e.Name?.Contains(request.Name) != true)
+            if (!string.IsNullOrWhiteSpace(request.Name) && e.Name?.ToLower().Contains(request.Name.ToLower()) != true)
                 return false;
 
             return true;
@@ -210,8 +226,6 @@ namespace Accounts.Business.Services
                 throw exception;
             }
         }
-
-
 
     }
 }

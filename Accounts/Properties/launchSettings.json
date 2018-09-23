@@ -13,7 +13,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DEFAULT_CONNECTION": "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Projetos\\Jeverson\\accountsDB.mdf;Integrated Security=True;Connect Timeout=30"
+        "DEFAULT_CONNECTION": "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\PROJETOS\\accountsDB.mdf;Integrated Security=True;Connect Timeout=30"
       }
     },
     "Accounts": {

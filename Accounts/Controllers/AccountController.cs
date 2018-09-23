@@ -65,7 +65,7 @@ namespace Accounts.Controllers
                 var result = service.Create(account);
                 return Ok(result);
             }
-            catch(BusinessException ex)
+            catch (BusinessException ex)
             {
                 return BadRequest(new { Message = ex.Message });
             }

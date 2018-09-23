@@ -4,14 +4,16 @@ using Accounts.Repository.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Accounts.Repository.Migrations
 {
     [DbContext(typeof(AccountsContext))]
-    partial class AccountsContextModelSnapshot : ModelSnapshot
+    [Migration("20180922162612_newbase")]
+    partial class newbase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,7 +96,7 @@ namespace Accounts.Repository.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ID")
-                        .HasDefaultValue(new Guid("c4b8cf66-a4bc-4b66-9441-78f1ecf0cb8e"));
+                        .HasDefaultValue(new Guid("200ddf37-82c2-46b7-a1df-4b426bf078e9"));
 
                     b.Property<int>("DestinyAccountId")
                         .HasColumnName("DESTINY_ACCOUNT_ID");

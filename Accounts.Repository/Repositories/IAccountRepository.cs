@@ -10,6 +10,7 @@ namespace Accounts.Repository.Repositories
     {
         IEnumerable<Account> GetAccounts();
         IEnumerable<Account> GetAccounts(Func<Account, bool> condition);
+
     }
 }
 

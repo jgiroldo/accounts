@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Accounts.Controllers
 {
     [Produces("application/json")]
-    [Route("api/person")]
+    [Route("api/persons")]
     public class PersonController : Controller
     {
         IPersonService service;

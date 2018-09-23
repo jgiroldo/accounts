@@ -1,7 +1,6 @@
 ﻿
 using Accounts.Business.Models;
 using Accounts.Domain.Entities;
-using Microsoft.AspNetCore.Cors;
 using System.Collections.Generic;
 
 namespace Accounts.Business.Services
@@ -16,6 +15,7 @@ namespace Accounts.Business.Services
         bool Chargeback(Transaction transaction);
         IEnumerable<AccountStatus> GetAccountStatus();
         IEnumerable<TransactionType> GetTransactionTypes();
+        
 
     }
 }

@@ -53,7 +53,9 @@ namespace Accounts
 
             //SERVICOS
             services.AddScoped<IAccountService, AccountService>();
-            
+            services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<ITransactionService, TransactionService>();
+
             services.AddLogging();
         }
 
